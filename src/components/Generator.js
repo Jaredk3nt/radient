@@ -82,7 +82,7 @@ const actions = {
   ADD_GRADIENT: function(state, { gradient }) {
     return {
       ...state,
-      gradients: [...state.gradients, gradient]
+      gradients: [gradient, ...state.gradients]
     };
   },
   ADD_COLOR: function(state, { index }) {
