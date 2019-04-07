@@ -1,60 +1,150 @@
-/** @jsx jsx */
-import React, { useState, useReducer } from "react";
-import { css, jsx } from "@emotion/core";
+import React, { useReducer } from "react";
+import styled from "@emotion/styled";
 // Components
 import Artboard from "./Artboard";
+import GradientEditor from "./GradientEditor";
 // Utils
 import { getCoordFromClick } from "../utils/grid";
 import { updateList, removeFromList } from "../utils/reduce";
 // Variables
+const DEFAULT_COLOR = "rgba(53,137,127,0.64)";
 const DEFAULT_GRADIENT_COLORS = [
   { color: "rgba(53,137,127,0.94)", width: 14 },
   { color: "rgba(49, 111, 127,0.42)", width: 45 },
   { color: "rgba(29,33,36,0.18)", width: 100 }
 ];
 const initialState = {
-  background: "#000",
-  gradients: []
+  background: "#fff",
+  gradients: [
+    {
+      location: {
+        x: 479,
+        y: 321.76666259765625
+      },
+      colors: [
+        {
+          color: "rgba(255,69,192,0.77)",
+          width: "6"
+        },
+        {
+          color: "rgba(255,3,8,0.21)",
+          width: "40"
+        },
+        {
+          color: "rgba(243,95,37,0.05)",
+          width: 100
+        }
+      ]
+    },
+    {
+      location: {
+        x: 23,
+        y: 485.76666259765625
+      },
+      colors: [
+        {
+          color: "rgba(244,255,0,0.8)",
+          width: "14"
+        },
+        {
+          color: "rgba(253,206,0,0.28)",
+          width: "78"
+        },
+        {
+          color: "rgba(255,100,0,0.29)",
+          width: 100
+        }
+      ]
+    },
+    {
+      location: {
+        x: 33,
+        y: 10.76666259765625
+      },
+      colors: [
+        {
+          color: "rgba(255,0,0,1)",
+          width: "17"
+        },
+        {
+          color: "rgba(255,0,10,0.88)",
+          width: 45
+        },
+        {
+          color: "rgba(255,0,0,0.18)",
+          width: 100
+        }
+      ]
+    }
+  ]
 };
 const actions = {
-  ADD_GRADIENT: function(state, args) {
+  ADD_GRADIENT: function(state, { gradient }) {
     return {
       ...state,
-      gradients: [...state.gradients, args.gradient]
+      gradients: [...state.gradients, gradient]
     };
   },
-  UPDATE_COLOR: function(state, args) {
-    const g = state.gradients[args.index];
-    const c = g.colors[args.cIndex];
+  ADD_COLOR: function(state, { index }) {
+    const g = state.gradients[index];
+    const newG = {
+      ...g,
+      colors: [...g.colors, { color: DEFAULT_COLOR, width: 100 }]
+    };
     return {
       ...state,
-      gradients: updateList(state.gradients, args.index, {
+      gradients: updateList(state.gradients, index, newG)
+    };
+  },
+  REMOVE_COLOR: function(state, { index, cIndex }) {
+    const g = state.gradients[index];
+    if (g.colors.length < 2) {
+      return {
+        ...state,
+        gradients: removeFromList(state.gradients, index)
+      };
+    }
+    const newG = {
+      ...g,
+      colors: removeFromList(g.colors, cIndex)
+    };
+    return {
+      ...state,
+      gradients: updateList(state.gradients, index, newG)
+    };
+  },
+  UPDATE_COLOR: function(state, { index, cIndex, color }) {
+    const g = state.gradients[index];
+    const c = g.colors[cIndex];
+    return {
+      ...state,
+      gradients: updateList(state.gradients, index, {
         ...g,
-        colors: updateList(g.colors, args.cIndex, {
+        colors: updateList(g.colors, cIndex, {
           ...c,
-          color: args.color
+          color: color
         })
       })
     };
   },
-  UPDATE_WIDTH: function(state, args) {
-    const g = state.gradients[args.index];
-    const c = g.colors[args.cIndex];
+  UPDATE_WIDTH: function(state, { index, cIndex, width }) {
+    const g = state.gradients[index];
+    const c = g.colors[cIndex];
     return {
       ...state,
-      gradients: updateList(state.gradients, args.index, {
+      gradients: updateList(state.gradients, index, {
         ...g,
-        colors: updateList(g.colors, args.cIndex, {
+        colors: updateList(g.colors, cIndex, {
           ...c,
-          width: args.width
+          width: width
         })
       })
     };
   },
-  DELETE_GRADIENT: function(state, args) {
+  DELETE_GRADIENT: function(state, { index }) {
     return {
       ...state,
-      gradients: removeFromList(state.gradients, args.index)
+      gradients: removeFromList(state.gradients, index)
     };
   }
 };
@@ -75,58 +165,60 @@ export default function Generator() {
     });
   }
 
+  console.log(store);
+
   return (
-    <div>
+    <Layout>
       <Artboard
         background={store.background}
         gradients={store.gradients}
         onClick={handleClick}
       />
-      <ul>
+      <EditorList>
         {store.gradients.map((gradient, index) => (
-          <li>
-            {gradient.colors.map((color, cIndex) => (
-              <div>
-                <div
-                  css={css`
-                    width: 15px;
-                    height: 15px;
-                    background-color: ${color.color};
-                  `}
-                />
-                <input
-                  value={color.color}
-                  onChange={e => {
-                    send(actions.UPDATE_COLOR, {
-                      index,
-                      cIndex,
-                      color: e.target.value
-                    });
-                  }}
-                />
-                <input
-                  value={color.width}
-                  type="number"
-                  onChange={e => {
-                    send(actions.UPDATE_WIDTH, {
-                      index,
-                      cIndex,
-                      width: e.target.value
-                    });
-                  }}
-                />
-              </div>
-            ))}
-            <button
-              onClick={() => {
-                send(actions.DELETE_GRADIENT, { index });
-              }}
-            >
-              Delete
-            </button>
-          </li>
+          <>
+          <GradientTitle>Gradient {index}</GradientTitle>
+          <GradientEditor
+            index={index}
+            gradient={gradient}
+            onColorUpdate={(cIndex, color) =>
+              send(actions.UPDATE_COLOR, { index, cIndex, color })
+            }
+            onWidthUpdate={(cIndex, width) =>
+              send(actions.UPDATE_WIDTH, { index, cIndex, width })
+            }
+            onColorAdd={() => send(actions.ADD_COLOR, { index })}
+            onColorRemove={cIndex =>
+              send(actions.REMOVE_COLOR, { index, cIndex })
+            }
+            onDelete={() => send(actions.DELETE_GRADIENT, { index })}
+          />
+          </>
         ))}
-      </ul>
-    </div>
+      </EditorList>
+    </Layout>
   );
 }
+
+const Layout = styled("div")`
+  width: 100%;
+  display: flex;
+`;
+
+const EditorList = styled("ul")`
+  background-color: #14161c;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: 0em 1em;
+  height: 500px;
+  width: 300px;
+  overflow: scroll;
+  list-style: none;
+`;
+
+const GradientTitle = styled('p')`
+  margin: 0em 0em .25em 0em;
+  color: white;
+  font-family: Work Sans, sans-serif;
+`;

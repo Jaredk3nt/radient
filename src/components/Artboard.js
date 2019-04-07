@@ -1,15 +1,19 @@
 /** @jsx jsx */
-import React from "react";
 import { css, jsx } from "@emotion/core";
 
-const width = 500;
-const height = 400;
+const length = 500;
+
+const styles = `
+width: ${length}px;
+height: ${length}px;
+border-radius: 8px;
+`;
 
 function stringifyGradient(g) {
-  return `radial-gradient(circle at ${(g.location.x / width) * 100}% ${(g.location.y /
-    height) * 100}%, ${g.colors
-    .map(color => `${color.color} ${color.width}%`)
-    .join(",")})`;
+  return `radial-gradient(
+    circle at ${(g.location.x / length) * 100}% ${(g.location.y / length) * 100}%,
+    ${g.colors.map(color => `${color.color} ${color.width}%`).join(",")}
+  )`;
 }
 
 export default function Artboard({ background, gradients, onClick }) {
@@ -17,15 +21,13 @@ export default function Artboard({ background, gradients, onClick }) {
     <div
       onClick={onClick}
       css={css`
-        width: ${width}px;
-        height: ${height}px;
+        ${styles}
         background-color: ${background};
       `}
     >
       <div
         css={css`
-          width: 100%;
-          height: 100%;
+          ${styles}
           background: ${gradients.map(stringifyGradient).join(",")};
         `}
       />
