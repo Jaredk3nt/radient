@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <Layout>
         <Header>
-          <h1>Radient</h1>          
+          <h1>Radient</h1>
         </Header>
         <Generator />
       </Layout>

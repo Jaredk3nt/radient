@@ -18,6 +18,7 @@ export default function GradientEditor({
     <Editor>
       {gradient.colors.map((color, cIndex) => (
         <ColorEditor
+          key={`color${index}-${cIndex}`}
           id={`color${index}-${cIndex}`}
           color={color}
           onColorUpdate={color => onColorUpdate(cIndex, stringifyRGB(color.rgb))}

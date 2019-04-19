@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 // Components
 import ColorPicker from "./ColorPicker";
-import Feather from 'feathered';
+import Feather from "feathered";
 // Utils
-import { parseRGB, stringifyRGB } from '../utils/stringifiers';
+import { parseRGB, stringifyRGB } from "../utils/stringifiers";
 
 export default function ColorEditor({
   color,
@@ -13,6 +13,18 @@ export default function ColorEditor({
   onRemove,
   id
 }) {
+  return (
+    <Editor>
+      <ColorPalette color={color} onColorUpdate={onColorUpdate} id={id} />
+      <input value={color.width} type="number" onChange={onWidthUpdate} />
+      <RemoveButton onClick={onRemove}>
+        <Feather icon="x" color="#aaa" />
+      </RemoveButton>
+    </Editor>
+  );
+}
+
+export function ColorPalette({ color, onColorUpdate, id }) {
   const [open, updateOpen] = useState(false);
 
   function close(e) {
@@ -32,30 +44,29 @@ export default function ColorEditor({
   function removeAlpha(color) {
     const rgba = parseRGB(color);
     delete rgba.a;
-    return stringifyRGB(rgba)
+    return stringifyRGB(rgba);
   }
 
   return (
-    <Editor>
-      <div>
-        <Display w="40px" h="30px" bg={removeAlpha(color.color)} onClick={toggleOpen} />
-        {open && (
-          <ColorPicker id={id} color={color.color} onChange={onColorUpdate} />
-        )}
-      </div>
-        <input value={color.width} type="number" onChange={onWidthUpdate} />
-        <RemoveButton onClick={onRemove}>
-          <Feather icon='x' color='#aaa' />
-        </RemoveButton>
-    </Editor>
+    <span>
+      <Display
+        w="40px"
+        h="30px"
+        bg={removeAlpha(color.color)}
+        onClick={toggleOpen}
+      />
+      {open && (
+        <ColorPicker id={id} color={color.color} onChange={onColorUpdate} />
+      )}
+    </span>
   );
 }
 
-const Editor = styled('div')`
+const Editor = styled("div")`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: .5em 0em;
+  margin: 0.5em 0em;
 `;
 
 const Display = styled("div")`
@@ -66,7 +77,7 @@ const Display = styled("div")`
   border: 1px solid #555;
 `;
 
-const RemoveButton = styled('button')`
+const RemoveButton = styled("button")`
   border: none;
   background-color: transparent;
   border-radius: 4px;

@@ -15,7 +15,6 @@ function textColor(rgb) {
 }
 
 function ColorPicker(props) {
-  console.log(props);
   return (
     <Container id={props.id}>
       <Field>

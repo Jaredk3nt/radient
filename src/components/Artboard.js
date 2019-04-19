@@ -1,5 +1,8 @@
 /** @jsx jsx */
+import { useState } from 'react';
 import { css, jsx } from "@emotion/core";
+// Components
+import Selector from './Selector';
 
 const length = 500;
 
@@ -17,11 +20,15 @@ function stringifyGradient(g) {
 }
 
 export default function Artboard({ background, gradients, onClick }) {
+  const [hovering, updateHover] = useState(false);
   return (
     <div
       onClick={onClick}
+      onMouseEnter={() => updateHover(true)}
+      onMouseLeave={() => updateHover(false)}
       css={css`
         ${styles}
+        position: relative;
         background-color: ${background};
       `}
     >
@@ -31,6 +38,15 @@ export default function Artboard({ background, gradients, onClick }) {
           background: ${gradients.map(stringifyGradient).join(",")};
         `}
       />
+      {hovering && gradients.map((gradient, i) => {
+        return (
+          <Selector
+            key={`gradient-selector-${i}`}
+            location={gradient.location}
+            gradient_name={`Gradient ${i}`}
+          />
+        );
+      })}
     </div>
   );
 }
