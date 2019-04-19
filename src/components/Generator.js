@@ -7,7 +7,7 @@ import { ColorPalette } from "./ColorEditor";
 // Utils
 import { getCoordFromClick } from "../utils/grid";
 import { updateList, removeFromList } from "../utils/reduce";
-import { stringifyRGB } from "../utils/stringifiers";
+import { stringifyRGB, generateCSS } from "../utils/stringifiers";
 // Variables
 import { DEFAULT_GRADIENT_COLORS, INITIAL_GRADIENTS } from "../config/values";
 const DEFAULT_COLOR = "rgba(53,137,127,0.64)";
@@ -109,56 +109,70 @@ export default function Generator() {
   }
 
   return (
-    <Layout>
-      <Artboard
-        background={store.background}
-        gradients={store.gradients}
-        onClick={handleClick}
-      />
-      <Editors>
-        <EditorList
-          as="div"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
-          <Title style={{ margin: 0 }}>Background color:</Title>
-          <ColorPalette
-            id="background-color-editor"
-            color={{ color: store.background }}
-            onColorUpdate={color => {
-              return send(
-                actions.UPDATE_BACKGROUND_COLOR,
-                stringifyRGB(color.rgb)
-              );
+    <Layout style={{ flexDirection: "column" }}>
+      <Layout>
+        <Artboard
+          background={store.background}
+          gradients={store.gradients}
+          onClick={handleClick}
+        />
+        <Editors>
+          <EditorList
+            as="div"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between"
             }}
-          />
-        </EditorList>
-        <EditorList>
-          {store.gradients.map((gradient, index) => (
-            <React.Fragment key={`gradient-editor-${index}`}>
-              <Title>Gradient {index}</Title>
-              <GradientEditor
-                index={index}
-                gradient={gradient}
-                onColorUpdate={(cIndex, color) =>
-                  send(actions.UPDATE_COLOR, { index, cIndex, color })
-                }
-                onWidthUpdate={(cIndex, width) =>
-                  send(actions.UPDATE_WIDTH, { index, cIndex, width })
-                }
-                onColorAdd={() => send(actions.ADD_COLOR, { index })}
-                onColorRemove={cIndex =>
-                  send(actions.REMOVE_COLOR, { index, cIndex })
-                }
-                onDelete={() => send(actions.DELETE_GRADIENT, { index })}
-              />
-            </React.Fragment>
-          ))}
-        </EditorList>
-      </Editors>
+          >
+            <Title style={{ margin: 0 }}>Background color:</Title>
+            <ColorPalette
+              id="background-color-editor"
+              color={{ color: store.background }}
+              onColorUpdate={color => {
+                return send(
+                  actions.UPDATE_BACKGROUND_COLOR,
+                  stringifyRGB(color.rgb)
+                );
+              }}
+            />
+          </EditorList>
+          <EditorList>
+            {store.gradients.map((gradient, index) => (
+              <React.Fragment key={`gradient-editor-${index}`}>
+                <Title>Gradient {index}</Title>
+                <GradientEditor
+                  index={index}
+                  gradient={gradient}
+                  onColorUpdate={(cIndex, color) =>
+                    send(actions.UPDATE_COLOR, { index, cIndex, color })
+                  }
+                  onWidthUpdate={(cIndex, width) =>
+                    send(actions.UPDATE_WIDTH, { index, cIndex, width })
+                  }
+                  onColorAdd={() => send(actions.ADD_COLOR, { index })}
+                  onColorRemove={cIndex =>
+                    send(actions.REMOVE_COLOR, { index, cIndex })
+                  }
+                  onDelete={() => send(actions.DELETE_GRADIENT, { index })}
+                />
+              </React.Fragment>
+            ))}
+          </EditorList>
+        </Editors>
+      </Layout>
+      <Layout style={{ marginTop: "1em" }}>
+        <TextArea style={{ marginRight: "1em" }}>{`
+<div className='background-container'>
+  <div className='gradient'>
+    // ...
+  </div>
+</div>
+        `}</TextArea>
+        <TextArea>
+          {generateCSS(store.gradients, store.background)}
+        </TextArea>
+      </Layout>
     </Layout>
   );
 }
@@ -181,7 +195,7 @@ const EditorList = styled("ul")`
   border-radius: 8px;
   box-sizing: border-box;
   padding: 1em;
-  margin: 0em 1em;
+  margin: 0em 0em 0em 1em;
   overflow: scroll;
   list-style: none;
 `;
@@ -190,4 +204,16 @@ const Title = styled("p")`
   margin: 0em 0em 0.25em 0em;
   color: white;
   font-family: Work Sans, sans-serif;
+`;
+
+const TextArea = styled("textarea")`
+  width: 100%;
+  background-color: #14161c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  resize: none;
+  box-sizing: border-box;
+  min-height: 200px;
+  padding: 1em;
 `;

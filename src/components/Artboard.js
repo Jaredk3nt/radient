@@ -3,21 +3,17 @@ import { useState } from 'react';
 import { css, jsx } from "@emotion/core";
 // Components
 import Selector from './Selector';
-
-const length = 500;
-
+// Utils
+import { stringifyGradient } from '../utils/stringifiers';
+// Variables
+import { ARTBOARD_LENGTH } from '../config/values';
 const styles = `
-width: ${length}px;
-height: ${length}px;
+width: ${ARTBOARD_LENGTH}px;
+height: ${ARTBOARD_LENGTH}px;
 border-radius: 8px;
 `;
 
-function stringifyGradient(g) {
-  return `radial-gradient(
-    circle at ${(g.location.x / length) * 100}% ${(g.location.y / length) * 100}%,
-    ${g.colors.map(color => `${color.color} ${color.width}%`).join(",")}
-  )`;
-}
+
 
 export default function Artboard({ background, gradients, onClick }) {
   const [hovering, updateHover] = useState(false);
