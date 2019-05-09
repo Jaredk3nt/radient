@@ -1,4 +1,4 @@
-import { ARTBOARD_LENGTH } from "../config/values";
+import { ARTBOARD_WIDTH, ARTBOARD_HEIGHT } from "../config/values";
 
 export function parseRGB(str) {
   const [id, colors] = str.split("(");
@@ -27,8 +27,8 @@ export function stringifyRGB(rgb) {
 
 export function stringifyGradient(g) {
   return `radial-gradient(
-    circle at ${(g.location.x / ARTBOARD_LENGTH) * 100}% ${(g.location.y /
-    ARTBOARD_LENGTH) *
+    circle at ${(g.location.x / ARTBOARD_WIDTH) * 100}% ${(g.location.y /
+    ARTBOARD_HEIGHT) *
     100}%,
     ${g.colors.map(color => `${color.color} ${color.width}%`).join(",")}
   )`;

@@ -34,8 +34,8 @@ function ColorPicker(props) {
               border: 'none',
               borderRadius: '4px',
               padding: '.45em',
-              fontWeight: '800',
-              fontFamily: 'Work Sans, sans-serif',
+              fontWeight: '500',
+              fontFamily: 'Rubik, sans-serif',
               textTransform: 'lowercase',
               backgroundColor: props.hex,
               color: textColor(props.rgb)

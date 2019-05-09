@@ -1,0 +1,5 @@
+background:
+              linear-gradient(45deg, rgba(53,137,127,0.08) 44%, rgba(50, 129, 158,0.04) 100%),
+              radial-gradient(circle at -5% 98%, rgba(53,137,127,0.94) 0%, rgba(49, 111, 127,0.42) 12%, rgba(29,33,36,0.18) 28%, rgba(29, 33, 36, 0) 100%),
+              radial-gradient(circle at 105% 80%, rgba(101, 91, 178,0.68) 0%, rgba(156, 86, 221,0.32) 18%, rgba(98, 66, 127,0.08) 39%, rgba(29, 33, 36, 0) 100%),
+              radial-gradient(circle at 46% 120%, rgba(50, 129, 158,0.84) 0%, rgba(51, 104, 178,0.52) 18%, rgba(29,33,36,0.08) 44%, rgba(29, 33, 36, 0) 100%);

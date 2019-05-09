@@ -6,11 +6,10 @@ import Selector from './Selector';
 // Utils
 import { stringifyGradient } from '../utils/stringifiers';
 // Variables
-import { ARTBOARD_LENGTH } from '../config/values';
+import { ARTBOARD_WIDTH, ARTBOARD_HEIGHT } from '../config/values';
 const styles = `
-width: ${ARTBOARD_LENGTH}px;
-height: ${ARTBOARD_LENGTH}px;
-border-radius: 8px;
+width: ${ARTBOARD_WIDTH}px;
+height: ${ARTBOARD_HEIGHT}px;
 `;
 
 

@@ -15,7 +15,7 @@ export default function GradientEditor({
   onDelete
 }) {
   return (
-    <Editor>
+    <div>
       {gradient.colors.map((color, cIndex) => (
         <ColorEditor
           key={`color${index}-${cIndex}`}
@@ -28,11 +28,6 @@ export default function GradientEditor({
       ))}
       <button onClick={onColorAdd}>Add Color Stop</button>
       <button onClick={onDelete}>Delete</button>
-    </Editor>
+    </div>
   );
 }
-
-
-const Editor = styled('li')`
-  margin: .5em 0em 1em;
-`;

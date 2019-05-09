@@ -6,9 +6,6 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Header>
-          <h1>Radient</h1>
-        </Header>
         <Generator />
       </Layout>
     );
@@ -16,8 +13,9 @@ class App extends Component {
 }
 
 const Layout = styled('main')`
-  width: 800px;
-  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 const Header = styled('header')`
