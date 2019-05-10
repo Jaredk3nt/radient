@@ -25,25 +25,18 @@ export default function Generator() {
 
   return (
     <PageLayout>
-      <Layout align="center" justify="center">
-        <Artboard
-          background={store.background}
-          gradients={store.gradients}
-          onClick={handleClick}
-        />
+      <Layout dir='column'>
+        <Layout align="center" justify="center">
+          <Artboard
+            background={store.background}
+            gradients={store.gradients}
+            onClick={handleClick}
+          />
+        </Layout>
+        <TextArea style={{ borderRight: '1px solid #262930'}}>{generateCSS(store.gradients, store.background)}</TextArea>
       </Layout>
+
       <Sidebar send={send} store={store} />
-      {/* <Layout style={{ marginTop: '1em' }}>
-        <TextArea style={{ marginRight: '1em' }}>
-          {`
-<div className='background-container'>
-  <div className='gradient'>
-    // ...
-  </div>
-</div>
-        `}
-        </TextArea>
-        <TextArea>{generateCSS(store.gradients, store.background)}</TextArea> */}
     </PageLayout>
   );
 }
@@ -57,6 +50,7 @@ const PageLayout = styled('main')`
 
 const Layout = styled('div')`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: ${p => p.dir || 'row'};
   justify-content: ${p => p.justify || 'start'};

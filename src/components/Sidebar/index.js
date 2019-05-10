@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 // Components
 import ColorEditor from '../ColorEditor';
 import { ColorPalette } from '../ColorEditor';
-import GradientEditor from '../GradientEditor';
 // State
 import { actions } from '../../reducer';
 // Utils
@@ -16,6 +15,7 @@ export default function Sidebar({ store, send }) {
       <Item>
         <ItemText>Background Color</ItemText>
         <ColorPalette
+          rightAlign
           id="background-color-editor"
           color={{ color: store.background }}
           onColorUpdate={color => {
@@ -26,8 +26,9 @@ export default function Sidebar({ store, send }) {
           }}
         />
       </Item>
-      <Item>
+      <Item column>
         <ItemText>Gradients</ItemText>
+        <ItemText sub>Click on the cavas to add a new gradient</ItemText>
       </Item>
       {store.gradients.map((gradient, index) => (
         <GradientItem key={`gradient-editor-${index}`}>
@@ -101,16 +102,17 @@ const Item = styled('div')`
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: ${p => p.column ? 'column' : 'row'};
+  align-items: ${p => p.column ? 'flex-start' : 'center'};
   justify-content: space-between;
   padding: 1em;
 `;
 
 const ItemText = styled('p')`
-  margin: 0;
-  color: white;
-  font-weight: 600;
-  font-size: .9rem;
+  margin: 0em 0em .2em 0em;
+  color: ${p => p.sub ? '#A4A4A4' : 'white'};
+  font-weight: ${p => p.sub ? 400 : 600};
+  font-size: ${p => p.sub ? '.8rem' : '.9rem'};
 `;
 
 const GradientItem = styled('div')`

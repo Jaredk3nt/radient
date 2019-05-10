@@ -24,7 +24,7 @@ export default function ColorEditor({
   );
 }
 
-export function ColorPalette({ color, onColorUpdate, id }) {
+export function ColorPalette({ color, onColorUpdate, id, rightAlign }) {
   const [open, updateOpen] = useState(false);
 
   function close(e) {
@@ -48,7 +48,7 @@ export function ColorPalette({ color, onColorUpdate, id }) {
   }
 
   return (
-    <span>
+    <span style={{ position: 'relative'}}>
       <Display
         w="40px"
         h="30px"
@@ -56,7 +56,7 @@ export function ColorPalette({ color, onColorUpdate, id }) {
         onClick={toggleOpen}
       />
       {open && (
-        <ColorPicker id={id} color={color.color} onChange={onColorUpdate} />
+        <ColorPicker id={id} color={color.color} onChange={onColorUpdate} rightAlign={rightAlign} />
       )}
     </span>
   );

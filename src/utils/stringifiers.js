@@ -27,11 +27,11 @@ export function stringifyRGB(rgb) {
 
 export function stringifyGradient(g) {
   return `radial-gradient(
-    circle at ${(g.location.x / ARTBOARD_WIDTH) * 100}% ${(g.location.y /
+      circle at ${(g.location.x / ARTBOARD_WIDTH) * 100}% ${(g.location.y /
     ARTBOARD_HEIGHT) *
     100}%,
-    ${g.colors.map(color => `${color.color} ${color.width}%`).join(",")}
-  )`;
+      ${g.colors.map(color => `${color.color} ${color.width}%`).join(", ")}
+    )`;
 }
 
 export function generateCSS(gradients, background) {
@@ -43,6 +43,6 @@ export function generateCSS(gradients, background) {
   .gradient {
     background: ${gradients
       .map(stringifyGradient)
-      .join(",")};
+      .join(", ")};
   }`
 }
