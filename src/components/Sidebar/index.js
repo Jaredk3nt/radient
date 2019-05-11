@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import styled from '@emotion/styled';
 // Components
+import Button from '../Button';
 import ColorEditor from '../ColorEditor';
 import { ColorPalette } from '../ColorEditor';
 // State
@@ -58,12 +59,14 @@ export default function Sidebar({ store, send }) {
                 onRemove={() => send(actions.REMOVE_COLOR, { index, cIndex })}
               />
             ))}
-            <button onClick={() => send(actions.ADD_COLOR, { index })}>
-              Add Color Stop
-            </button>
-            <button onClick={() => send(actions.DELETE_GRADIENT, { index })}>
-              Delete
-            </button>
+            <ButtonItem>
+              <Button onClick={() => send(actions.ADD_COLOR, { index })}>
+                Add Color Stop
+              </Button>
+              <Button onClick={() => send(actions.DELETE_GRADIENT, { index })} bg='#821515'>
+                Remove Gradient
+              </Button>
+            </ButtonItem>
           </div>
         </GradientItem>
       ))}
@@ -102,17 +105,17 @@ const Item = styled('div')`
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  flex-direction: ${p => p.column ? 'column' : 'row'};
-  align-items: ${p => p.column ? 'flex-start' : 'center'};
+  flex-direction: ${p => (p.column ? 'column' : 'row')};
+  align-items: ${p => (p.column ? 'flex-start' : 'center')};
   justify-content: space-between;
   padding: 1em;
 `;
 
 const ItemText = styled('p')`
-  margin: 0em 0em .2em 0em;
-  color: ${p => p.sub ? '#A4A4A4' : 'white'};
-  font-weight: ${p => p.sub ? 400 : 600};
-  font-size: ${p => p.sub ? '.8rem' : '.9rem'};
+  margin: 0em 0em 0.2em 0em;
+  color: ${p => (p.sub ? '#A4A4A4' : 'white')};
+  font-weight: ${p => (p.sub ? 400 : 600)};
+  font-size: ${p => (p.sub ? '.8rem' : '.9rem')};
 `;
 
 const GradientItem = styled('div')`
@@ -121,4 +124,12 @@ const GradientItem = styled('div')`
   width: 100%;
   padding: 1em;
   border-bottom: 1px solid #262930;
+`;
+
+const ButtonItem = styled('div')`
+box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+padding-top: .25em;
 `;

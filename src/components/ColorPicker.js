@@ -19,6 +19,7 @@ function ColorPicker({ rightAlign, ...props }) {
   if (rightAlign) style.right = '0px';
   return (
     <Container id={props.id} style={style}>
+      <p>Color Picker</p>
       <Field>
         <Saturation {...props} />
       </Field>
@@ -51,14 +52,22 @@ function ColorPicker({ rightAlign, ...props }) {
 }
 
 const Container = styled('div')`
-  background-color: white;
+  background-color: #0B0C0D;
   position: absolute;
   box-sizing: border-box;
   width: 200px;
-  padding: 0.5em;
-  border-radius: 8px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+  padding: 0.5em .75em .75em;
+  margin-top: 0px;
+  border-radius: 4px;
+ 
   z-index: 2;
+  border: 1px solid #4F5564;
+
+  p {
+    margin: 0em 0em .75em;
+    color: white;
+    font-size: .7rem;
+  }
 `;
 
 const Field = styled('div')`

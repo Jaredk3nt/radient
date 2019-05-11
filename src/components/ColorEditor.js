@@ -73,8 +73,12 @@ const Display = styled("div")`
   width: ${p => p.w || "20px"};
   height: ${p => p.h || "20px"};
   background-color: ${p => p.bg || "#000"};
-  border-radius: 4px;
+  border-radius: px;
   border: 1px solid #555;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const RemoveButton = styled("button")`
