@@ -3,11 +3,9 @@ import styled from '@emotion/styled';
 // Components
 import Artboard from '../Artboard';
 import Sidebar from '../Sidebar';
-import GradientEditor from '../GradientEditor';
-import { ColorPalette } from '../ColorEditor';
 // Utils
 import { getCoordFromClick } from '../../utils/grid';
-import { stringifyRGB, generateCSS } from '../../utils/stringifiers';
+import {  generateCSS } from '../../utils/stringifiers';
 import { reducer, initialState, actions } from '../../reducer';
 // Variables
 import { DEFAULT_GRADIENT_COLORS } from '../../config/values';
@@ -23,6 +21,8 @@ export default function Generator() {
     });
   }
 
+  const css = generateCSS(store.gradients, store.background);
+
   return (
     <PageLayout>
       <Layout dir='column'>
@@ -33,9 +33,8 @@ export default function Generator() {
             onClick={handleClick}
           />
         </Layout>
-        <TextArea style={{ borderRight: '1px solid #262930'}}>{generateCSS(store.gradients, store.background)}</TextArea>
+        <TextArea style={{ borderRight: '1px solid #262930'}} value={css}/>
       </Layout>
-
       <Sidebar send={send} store={store} />
     </PageLayout>
   );
@@ -55,29 +54,6 @@ const Layout = styled('div')`
   flex-direction: ${p => p.dir || 'row'};
   justify-content: ${p => p.justify || 'start'};
   align-items: ${p => p.align || 'start'};
-`;
-
-const Editors = styled('div')`
-  height: 100%;
-  width: 300px;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-gap: 8px;
-`;
-
-const EditorList = styled('ul')`
-  background-color: #14161c;
-  box-sizing: border-box;
-  padding: 1em;
-  margin: 0em 0em 0em 1em;
-  overflow: scroll;
-  list-style: none;
-`;
-
-const Title = styled('p')`
-  margin: 0em 0em 0.25em 0em;
-  color: white;
-  font-family: Rubik, sans-serif;
 `;
 
 const TextArea = styled('textarea')`

@@ -18,8 +18,4 @@ const Layout = styled('main')`
   overflow: hidden;
 `;
 
-const Header = styled('header')`
-  width: 100%;
-`;
-
 export default App;

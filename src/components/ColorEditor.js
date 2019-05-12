@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 // Components
-import ColorPicker from "./ColorPicker";
+import Slider from './Slider';
 import Feather from "feathered";
+import ColorPicker from "./ColorPicker";
 // Utils
 import { parseRGB, stringifyRGB } from "../utils/stringifiers";
 
@@ -16,7 +17,7 @@ export default function ColorEditor({
   return (
     <Editor>
       <ColorPalette color={color} onColorUpdate={onColorUpdate} id={id} />
-      <input value={color.width} type="number" onChange={onWidthUpdate} />
+      <Slider value={color.width} onChange={onWidthUpdate} />
       <RemoveButton onClick={onRemove}>
         <Feather icon="x" color="#aaa" />
       </RemoveButton>
@@ -63,9 +64,9 @@ export function ColorPalette({ color, onColorUpdate, id, rightAlign }) {
 }
 
 const Editor = styled("div")`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 40px 1fr 24px;
+  grid-gap: 8px;
   margin: 0.5em 0em;
 `;
 
@@ -73,8 +74,8 @@ const Display = styled("div")`
   width: ${p => p.w || "20px"};
   height: ${p => p.h || "20px"};
   background-color: ${p => p.bg || "#000"};
-  border-radius: px;
-  border: 1px solid #555;
+  border-radius: 4px;
+  border: 1px solid #bbb;
 
   &:hover {
     cursor: pointer;

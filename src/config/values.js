@@ -1,5 +1,5 @@
-export const ARTBOARD_WIDTH = 700;
-export const ARTBOARD_HEIGHT = 500;
+export const ARTBOARD_WIDTH = 600;
+export const ARTBOARD_HEIGHT = 428;
 
 export const DEFAULT_GRADIENT_COLORS = [
   { color: "rgba(53,137,127,0.94)", width: 14 },
@@ -10,7 +10,7 @@ export const DEFAULT_GRADIENT_COLORS = [
 export const INITIAL_GRADIENTS = [
   {
     location: {
-      x: 679,
+      x: 580,
       y: 321.76666259765625
     },
     colors: [
@@ -31,7 +31,7 @@ export const INITIAL_GRADIENTS = [
   {
     location: {
       x: 23,
-      y: 485.76666259765625
+      y: 414
     },
     colors: [
       {

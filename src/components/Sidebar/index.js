@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 // Components
 import Button from '../Button';
@@ -49,12 +49,13 @@ export default function Sidebar({ store, send }) {
                     color: stringifyRGB(color.rgb),
                   })
                 }
-                onWidthUpdate={e =>
+                onWidthUpdate={width => {
                   send(actions.UPDATE_WIDTH, {
                     index,
                     cIndex,
-                    width: e.target.value,
+                    width,
                   })
+                }
                 }
                 onRemove={() => send(actions.REMOVE_COLOR, { index, cIndex })}
               />
@@ -108,7 +109,7 @@ const Item = styled('div')`
   flex-direction: ${p => (p.column ? 'column' : 'row')};
   align-items: ${p => (p.column ? 'flex-start' : 'center')};
   justify-content: space-between;
-  padding: 1em;
+  padding: .5em 1em;
 `;
 
 const ItemText = styled('p')`
