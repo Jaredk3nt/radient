@@ -60,7 +60,7 @@ const Container = styled('div')`
   margin-top: 0px;
   border-radius: 4px;
  
-  z-index: 2;
+  z-index: 3;
   border: 1px solid #4F5564;
 
   p {

@@ -87,7 +87,7 @@ const SliderContainer = styled('div')`
     top: 15px;
     height: 2px;
     left: 0.5em;
-    z-index: 2;
+    z-index: 1;
   }
 `;
 
@@ -102,7 +102,7 @@ const SliderButton = styled('button')`
   justify-content: center;
   align-items: center;
   color: black;
-  z-index: 99;
+  z-index: 2;
   font-family: Rubik, sans-serif;
   font-size: 0.6rem;
 `;
